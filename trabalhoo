@@ -1,0 +1,70 @@
+pip install pygame
+adventure_game/
+├── main.py
+├── assets/
+│   ├── images/
+│   └── sounds/
+├── scripts/
+│   └── dialogue.py
+└── README.md
+import pygame
+import sys
+from scripts.dialogue import DialogueManager
+
+# Inicializa o Pygame
+pygame.init()
+
+# Configurações da tela
+SCREEN_WIDTH, SCREEN_HEIGHT = 800, 600
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+pygame.display.set_caption("Jogo de Aventura")
+
+# Cores
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+
+# Fonte
+font = pygame.font.SysFont(None, 36)
+
+# Diálogo
+dialogue_manager = DialogueManager()
+
+def main():
+    clock = pygame.time.Clock()
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+        
+        screen.fill(WHITE)
+        
+        # Exibe o diálogo
+        dialogue_text = dialogue_manager.get_current_dialogue()
+        text_surface = font.render(dialogue_text, True, BLACK)
+        screen.blit(text_surface, (50, SCREEN_HEIGHT - 100))
+        
+        pygame.display.flip()
+        clock.tick(30)
+
+if __name__ == "__main__":
+    main()
+class DialogueManager:
+    def __init__(self):
+        self.dialogues = [
+            "Bem-vindo ao jogo de aventura!",
+            "Você está em uma floresta misteriosa.",
+            "Há algo brilhando à distância...",
+        ]
+        self.current_index = 0
+
+    def get_current_dialogue(self):
+        dialogue = self.dialogues[self.current_index]
+        self.current_index = (self.current_index + 1) % len(self.dialogues)
+        return dialogue
+git init
+git add .
+git commit -m "Initial commit"
+git branch -M main
+git remote add origin <URL_DO_SEU_REPOSITORIO>
+git push -u origin main
